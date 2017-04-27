@@ -15,7 +15,6 @@ public class AppConfig {
 
     @Bean
     public Filter doFilter() {
-        System.out.println("siema");
         return new AuthorizationFilter();
     }
 

@@ -3,8 +3,6 @@ package hello.security;
 
 import hello.pojo.AuthorizationData;
 
-import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,8 @@ public class Authentication {
 
     private static final Logger logger = LoggerFactory.getLogger(Authentication.class);
 
-    private static final String USER_UUID = UUID.randomUUID().toString();
-    private static final String TOKEN = "e550d817-534c-4140-bb76-4395f83cac08";
+//    private static final String USER_UUID = UUID.randomUUID().toString();
+    private static final String UUID = "e550d817-534c-4140-bb76-4395f83cac08";
     private static final String USERNAME = "tomek";
     private static final String PASSWORD = "haslo";
 
@@ -47,7 +45,7 @@ public class Authentication {
     }
 
     public boolean authorizeUser(String token) {
-        boolean isTokenValid = TOKEN.equals(token);
+        boolean isTokenValid = UUID.equals(token);
         if(isTokenValid && isUserAuthenticated()) {
             authData.validToken();
         } else {
