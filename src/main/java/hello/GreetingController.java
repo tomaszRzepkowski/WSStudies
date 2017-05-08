@@ -17,18 +17,18 @@ public class GreetingController {
 
     @Autowired
     DataProvider dataProvider;
-
-    @RequestMapping
-    public Person getPerson(@RequestParam(value="personId") Long personId) {
-        return dataProvider.getPersonById(personId);
-    }
+//TODO odkomentowac zmienic mapping i bedzie smigac
+//    @RequestMapping("/person")
+//    public Person getPerson(@RequestParam(value="personId") Long personId) {
+//        return dataProvider.getPersonById(personId);
+//    }
 
     @RequestMapping("/removePerson")
     public void removePerson(@RequestParam(value="personId") Long personId) {
         dataProvider.removeIfExists(personId);
     }
 
-    @RequestMapping("/listPeople")
+    @RequestMapping(value = "/listPeople", method = RequestMethod.GET, produces = "application/json")
     public List<Person> listPeople() {
         return dataProvider.getAllPeople();
     }

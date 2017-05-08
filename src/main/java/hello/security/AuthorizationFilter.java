@@ -1,5 +1,7 @@
 package hello.security;
 
+import hello.controller.AuthorizationController;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -23,9 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class AuthorizationFilter implements Filter{
 
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationFilter.class);
-    public static final String TOKEN = "token";
-    public static final String LOGIN = "login";
-    public static final String PASSWORD = "password";
 
     @Autowired
     private Authentication authService;
@@ -50,35 +49,22 @@ public class AuthorizationFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Content-Type", "application/json");
-        String token = ( (RequestFacade) servletRequest ).getHeader(TOKEN);
-        String login = ( (RequestFacade) servletRequest ).getHeader(LOGIN);
-        String password = ( (RequestFacade) servletRequest ).getHeader(PASSWORD);
+        String requestURI = ( (RequestFacade) servletRequest ).getRequestURI();
+        String token = ( (RequestFacade) servletRequest ).getParameter("token");
         //For Android
-        if(login == null) {
-            token = servletRequest.getParameterMap().get(TOKEN)[0];
-            login = servletRequest.getParameterMap().get(LOGIN)[0];
-            password = servletRequest.getParameterMap().get(PASSWORD)[0];
-        }
+//        if(login == null) {
+//            token = servletRequest.getParameterMap().get(TOKEN)[0];
+//            login = servletRequest.getParameterMap().get(LOGIN)[0];
+//            password = servletRequest.getParameterMap().get(PASSWORD)[0];
+//        }
 
-        if( StringUtils.isEmpty(login) || StringUtils.isEmpty(password) ) {
-            if(authService.isUserAuthenticated()) {
-                authService.checkIfTokenIsExpired();
-                authService.authorizeUser(token);
-            }
-        }
-        if(!authService.isUserAuthenticated()) {
-            authService.authenticateUser(login, password);
-            if(authService.isUserAuthenticated()) {
-                authService.authorizeUser(token);
-            }
-        } else {
-            //try to authorize user if he's authenticated
-            authService.authorizeUser(token);
-        }
-        if(authService.isUserAuthorized()) {
+        if(null == token && requestURI.equals(AuthorizationController.AUTHENTICATION_URI)) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else if (authService.isUserAuthenticated(token)){
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            logger.info("User with credentials: " + login + " " +  password + "is not a valid user");
+            ( (HttpServletResponse) servletResponse ).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            servletResponse.getWriter().print("You are unauthorized to access the server. Try authenticating with your credentials");
         }
     }
 
