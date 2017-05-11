@@ -31,6 +31,7 @@ public class Authentication {
     }
 
     private Authentication() {
+        authData = new AuthorizationData();
     }
 
     public String authenticateUser(String login, String password) {
@@ -55,5 +56,16 @@ public class Authentication {
             }
         }
         return false;
+    }
+
+
+    public String getSecretForUserUUID(String UUID) {
+        Map<String, Credentials> userList = authData.getUserList();
+        for(Credentials user : userList.values()) {
+            if(user.getUUID().equals(UUID)) {
+                return user.getSecret();
+            }
+        }
+        return StringUtils.EMPTY;
     }
 }

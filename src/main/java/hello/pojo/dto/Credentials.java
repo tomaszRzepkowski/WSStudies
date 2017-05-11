@@ -27,7 +27,7 @@ public class Credentials {
     public Credentials(String login, String password) {
         this.login = login;
         this.password = password;
-        this.secret = "o5db y2sj ozqd sezh qnmf 2cow ytmp d5l4";
+        this.secret = "5PT3WXYAQOKSELH3";
     }
 
     public String getLogin() {
@@ -62,5 +62,9 @@ public class Credentials {
 
     public boolean tokenIsValid() {
         return this.UUIDExpirationDate.compareTo(new Date()) > 0;
+    }
+
+    public String getSecret() {
+        return secret;
     }
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthorizationController {
 
     public static final String AUTHENTICATION_URI = "/auth/authenticate";
+    public static final String SWAGGER_URI = "swagger";
+    public static final String V2 = "v2";
 
     @Autowired
     private Authentication authService;

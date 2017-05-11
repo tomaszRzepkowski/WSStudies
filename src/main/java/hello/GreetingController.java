@@ -23,7 +23,7 @@ public class GreetingController {
 //        return dataProvider.getPersonById(personId);
 //    }
 
-    @RequestMapping("/removePerson")
+    @RequestMapping(value = "/removePerson", method = RequestMethod.DELETE)
     public void removePerson(@RequestParam(value="personId") Long personId) {
         dataProvider.removeIfExists(personId);
     }

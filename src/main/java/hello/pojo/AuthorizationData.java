@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.ApplicationScope;
+import org.springframework.web.context.annotation.SessionScope;
 
 /**
  * @author tomaszrzepkowski on 06.04.2017.

@@ -25,7 +25,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/listPeople"))
+                .paths(PathSelectors.any())
 //                .apis(RequestHandlerSelectors.basePackage("com.example.controller"))
 //                .paths(PathSelectors.ant("/foos/*"))
                 .build()

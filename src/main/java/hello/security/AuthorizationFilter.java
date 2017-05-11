@@ -51,14 +51,10 @@ public class AuthorizationFilter implements Filter{
         response.setHeader("Content-Type", "application/json");
         String requestURI = ( (RequestFacade) servletRequest ).getRequestURI();
         String token = ( (RequestFacade) servletRequest ).getParameter("token");
-        //For Android
-//        if(login == null) {
-//            token = servletRequest.getParameterMap().get(TOKEN)[0];
-//            login = servletRequest.getParameterMap().get(LOGIN)[0];
-//            password = servletRequest.getParameterMap().get(PASSWORD)[0];
-//        }
 
-        if(null == token && requestURI.equals(AuthorizationController.AUTHENTICATION_URI)) {
+        if(null == token && requestURI.equals(AuthorizationController.AUTHENTICATION_URI)
+                || requestURI.contains(AuthorizationController.SWAGGER_URI)
+                || requestURI.contains(AuthorizationController.V2)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (authService.isUserAuthenticated(token)){
             filterChain.doFilter(servletRequest, servletResponse);
