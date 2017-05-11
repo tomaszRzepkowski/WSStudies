@@ -35,7 +35,7 @@ public class DataProvider {
     private void initialize() {
         people = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            people.add(new Person((long) i+30, "Bolek " + i, "Lolek"));
+            people.add(new Person((long) i, "Bolek " + i, "Lolek"));
         }
     }
 
