@@ -44,7 +44,6 @@ public class GoogleAuthenticatorHelper {
         byte[] msg = ByteBuffer.allocate(8).putLong(time).array();
         byte[] hash = hmacSha(crypto, decodedKey, msg);
 
-        // put selected bytes into result int1
         int offset = hash[hash.length - 1] & 0xf;
 
         int binary = ((hash[offset] & 0x7f) << 24) | ((hash[offset + 1] & 0xff) << 16) | ((hash[offset + 2] & 0xff) << 8) | (hash[offset + 3] & 0xff);
@@ -56,14 +55,9 @@ public class GoogleAuthenticatorHelper {
 
 //    @RequestMapping(value = "/gen", method = RequestMethod.GET, produces = "text/plain")
     public static String generateSecret() {
-
-        // Allocating the buffer
         byte[] buffer = new byte[10];
-
-        // Filling the buffer with random numbers.
         rand.nextBytes(buffer);
 
-        // Getting the key and converting it to Base32
         Base32 codec = new Base32();
         byte[] secretKey = Arrays.copyOf(buffer, 10);
         byte[] encodedKey = codec.encode(secretKey);

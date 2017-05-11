@@ -52,9 +52,7 @@ public class AuthorizationFilter implements Filter{
         String requestURI = ( (RequestFacade) servletRequest ).getRequestURI();
         String token = ( (RequestFacade) servletRequest ).getParameter("token");
 
-        if(null == token && requestURI.equals(AuthorizationController.AUTHENTICATION_URI)
-                || requestURI.contains(AuthorizationController.SWAGGER_URI)
-                || requestURI.contains(AuthorizationController.V2)) {
+        if( isAuthOrSwagger(requestURI, token) ) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (authService.isUserAuthenticated(token)){
             filterChain.doFilter(servletRequest, servletResponse);
@@ -62,6 +60,12 @@ public class AuthorizationFilter implements Filter{
             ( (HttpServletResponse) servletResponse ).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             servletResponse.getWriter().print("You are unauthorized to access the server. Try authenticating with your credentials");
         }
+    }
+
+    private boolean isAuthOrSwagger(String requestURI, String token) {
+        return null == token && requestURI.equals(AuthorizationController.AUTHENTICATION_URI)
+                || requestURI.contains(AuthorizationController.SWAGGER_URI)
+                || requestURI.contains(AuthorizationController.V2);
     }
 
     @Override

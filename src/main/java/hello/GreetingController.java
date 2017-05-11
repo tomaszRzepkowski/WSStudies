@@ -17,11 +17,11 @@ public class GreetingController {
 
     @Autowired
     DataProvider dataProvider;
-//TODO odkomentowac zmienic mapping i bedzie smigac
-//    @RequestMapping("/person")
-//    public Person getPerson(@RequestParam(value="personId") Long personId) {
-//        return dataProvider.getPersonById(personId);
-//    }
+
+    @RequestMapping(value = "/person", method = RequestMethod.GET)
+    public Person getPerson(@RequestParam(value="personId") Long personId) {
+        return dataProvider.getPersonById(personId);
+    }
 
     @RequestMapping(value = "/removePerson", method = RequestMethod.DELETE)
     public void removePerson(@RequestParam(value="personId") Long personId) {

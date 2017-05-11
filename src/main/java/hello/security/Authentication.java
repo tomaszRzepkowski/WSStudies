@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Authentication {
 
-    private static final Logger logger = LoggerFactory.getLogger(Authentication.class);
-
     @Autowired
     AuthorizationData authData;
 

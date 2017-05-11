@@ -26,8 +26,6 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-//                .apis(RequestHandlerSelectors.basePackage("com.example.controller"))
-//                .paths(PathSelectors.ant("/foos/*"))
                 .build()
                 .apiInfo(apiInfo());
     }
